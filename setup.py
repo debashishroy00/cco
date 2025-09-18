@@ -4,7 +4,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setup(
-    name="cco",
+    name="ccom",
     version="0.1.0",
     author="Your Name",
     author_email="your.email@example.com",
@@ -29,7 +29,7 @@ setup(
     install_requires=[],
     entry_points={
         "console_scripts": [
-            "cco=cco.cli:main",
+            "ccom=cco.cli:main",
         ],
     },
     include_package_data=True,

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""CCO CLI - One command installation"""
+"""CCOM CLI - Claude Code Orchestrator and Memory"""
 
 import os
 import sys
@@ -16,7 +16,7 @@ def init_project():
     current_dir = Path.cwd()
     template_dir = get_template_path()
 
-    print("Initializing CCO v0.1...")
+    print("Initializing CCOM v0.1...")
 
     # Create .claude directory
     claude_dir = current_dir / ".claude"
@@ -53,11 +53,11 @@ def show_status():
     memory_file = claude_dir / "memory.json"
 
     if not claude_dir.exists():
-        print("ERROR: CCO not initialized. Run 'cco init' first.")
+        print("ERROR: CCOM not initialized. Run 'ccom init' first.")
         return False
 
     if not memory_file.exists():
-        print("CCO initialized but no memory yet.")
+        print("CCOM initialized but no memory yet.")
         return True
 
     # Run the node command to show status
@@ -67,17 +67,17 @@ def show_status():
 def main():
     """Main CLI entry point"""
     parser = argparse.ArgumentParser(
-        description="CCO - Claude Code Orchestrator",
+        description="CCOM - Claude Code Orchestrator and Memory",
         epilog="For more info: https://github.com/debashishroy00/cco"
     )
 
     subparsers = parser.add_subparsers(dest="command", help="Available commands")
 
     # Init command
-    init_parser = subparsers.add_parser("init", help="Initialize CCO in current directory")
+    init_parser = subparsers.add_parser("init", help="Initialize CCOM in current directory")
 
     # Status command
-    status_parser = subparsers.add_parser("status", help="Show CCO status")
+    status_parser = subparsers.add_parser("status", help="Show CCOM status")
 
     # Memory command
     memory_parser = subparsers.add_parser("memory", help="Show memory contents")

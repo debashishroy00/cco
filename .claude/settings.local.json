@@ -3,7 +3,12 @@
     "allow": [
       "Bash(node:*)",
       "Bash(python test:*)",
-      "Bash(python:*)"
+      "Bash(python:*)",
+      "Bash(where cco)",
+      "Bash(cco:*)",
+      "Bash(pip uninstall:*)",
+      "Bash(pip install:*)",
+      "Read(//c/Users/DR/OneDrive/projects/todo/**)"
     ],
     "deny": [],
     "ask": []

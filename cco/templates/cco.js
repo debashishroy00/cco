@@ -7,6 +7,7 @@ class CCO {
     this.memoryPath = path.join(__dirname, 'memory.json');
     this.memory = this.loadMemory();
     this.setupHooks();
+    this.autoDisplayMemory(); // Auto-display on load
   }
 
   // Core memory functions
@@ -134,6 +135,35 @@ ${features}
     const empty = this.createEmptyMemory();
     this.saveMemory(empty);
     console.log('✅ Memory cleared');
+  }
+
+  // Auto-display memory on session start
+  autoDisplayMemory() {
+    const featureCount = Object.keys(this.memory.features).length;
+
+    if (featureCount === 0) {
+      console.log(`📝 Starting fresh project: ${this.memory.project.name}`);
+      return;
+    }
+
+    console.log('\n🧠 MEMORY LOADED - Existing Features:');
+    console.log('═'.repeat(50));
+
+    for (const [name, data] of Object.entries(this.memory.features)) {
+      console.log(`• ${name}`);
+      if (data.description) {
+        console.log(`  Description: ${data.description}`);
+      }
+      if (data.files && data.files.length > 0) {
+        console.log(`  Files: ${data.files.join(', ')}`);
+      }
+      console.log(`  Created: ${data.created}`);
+      console.log('');
+    }
+
+    console.log('⚠️  CHECK FOR DUPLICATES BEFORE CREATING NEW FEATURES!');
+    console.log('═'.repeat(50));
+    console.log('');
   }
 
   // Hook setup for Claude Code integration

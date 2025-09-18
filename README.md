@@ -1,4 +1,4 @@
-# CCO v0.1 - Memory That Works
+# CCOM v0.1 - Claude Code Orchestrator and Memory
 
 **One-command memory for Claude Code. Ships in 200 lines.**
 
@@ -6,13 +6,16 @@
 
 ```bash
 # Install once
-pip install cco
+pip install ccom
 
 # Use in any project
 cd my-project
-cco init
+ccom init
 
 # Test it immediately
-cco status
-cco remember "auth system"
-cco remember "auth system"  # ⚠️ Duplicate detected!
+ccom status
+ccom remember "auth system"
+ccom remember "auth system"  # ⚠️ Duplicate detected!
+
+# Or install from GitHub (latest)
+pip install git+https://github.com/debashishroy00/cco.git
