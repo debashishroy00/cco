@@ -10,7 +10,12 @@
       "Bash(pip install:*)",
       "Read(//c/Users/DR/OneDrive/projects/todo/**)",
       "Read(//c/Users/DR/OneDrive/projects/**)",
-      "Bash(mkdir:*)"
+      "Bash(mkdir:*)",
+      "WebSearch",
+      "WebFetch(domain:docs.claude.com)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:claudelog.com)",
+      "Bash(npm install)"
     ],
     "deny": [],
     "ask": []
