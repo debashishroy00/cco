@@ -59,7 +59,7 @@ def handle_traditional_commands(args, orchestrator):
     return False
 
 def init_ccom_project():
-    """Initialize CCOM in current project"""
+    """Initialize CCOM v0.3 in current project"""
     print("🚀 Initializing CCOM v0.3 in current project...")
 
     current_dir = Path.cwd()
@@ -81,11 +81,33 @@ def init_ccom_project():
             shutil.copy2(agent_file, dest_file)
             print(f"✅ Installed agent: {agent_file.name}")
 
-    # Create enhanced CLAUDE.md
+    # Handle CLAUDE.md - backup existing and create v0.3
     claude_md = current_dir / "CLAUDE.md"
-    if not claude_md.exists():
+    if claude_md.exists():
+        # Check if it's already v0.3
+        try:
+            with open(claude_md, 'r', encoding='utf-8') as f:
+                content = f.read()
+
+            if "CCOM Integration for Claude Code v0.3" in content:
+                print("✅ CLAUDE.md already v0.3 configuration")
+            else:
+                # Backup existing file
+                backup_path = current_dir / "CLAUDE.md.bak"
+                import shutil
+                shutil.copy2(claude_md, backup_path)
+                print(f"⚠️  Backed up existing CLAUDE.md to CLAUDE.md.bak")
+
+                # Create v0.3 configuration
+                create_enhanced_claude_md(claude_md)
+                print("✅ Updated CLAUDE.md to v0.3 configuration")
+        except Exception as e:
+            print(f"⚠️  Error reading CLAUDE.md: {e}")
+            create_enhanced_claude_md(claude_md)
+            print("✅ Created new CLAUDE.md v0.3 configuration")
+    else:
         create_enhanced_claude_md(claude_md)
-        print("✅ Created enhanced CLAUDE.md")
+        print("✅ Created CLAUDE.md v0.3 configuration")
 
     # Initialize memory
     orchestrator = CCOMOrchestrator()
@@ -93,70 +115,176 @@ def init_ccom_project():
     print("✅ Initialized memory system")
 
     print("\n🎉 CCOM v0.3 initialized successfully!")
-    print("\n📖 Try these commands:")
+    print("\n📖 Try these CCOM commands:")
     print("  ccom 'deploy my app'")
     print("  ccom 'check security'")
     print("  ccom 'quality audit'")
     print("  ccom --status")
+    print("\n💡 CCOM only activates with 'ccom' prefix - regular Claude Code otherwise!")
 
 def create_enhanced_claude_md(claude_md_path):
-    """Create enhanced CLAUDE.md with CCOM configuration"""
-    content = """# CCOM Enterprise Configuration v0.3
+    """Create enhanced CLAUDE.md with CCOM v0.3 integration configuration"""
+    content = """# CCOM Integration for Claude Code v0.3
 
-## Project Overview
-This project uses CCOM v0.3 for enterprise-grade development with vibe coder confidence.
+## CCOM Command Processing
 
-## Quality Standards
-- **ESLint**: Essential production rules automatically enforced
-- **Prettier**: Consistent formatting across all files
-- **Security**: Comprehensive vulnerability scanning
-- **Git Hooks**: Quality checks run automatically on commit
+**IMPORTANT**: Only activate CCOM functionality when user message starts with "ccom" (case-insensitive).
 
-## Available CCOM Commands
+### How CCOM Commands Work:
+- **Trigger**: Message starts with "ccom"
+- **Examples**:
+  - "ccom can you test this app for code quality?"
+  - "ccom deploy this to production"
+  - "ccom check security vulnerabilities"
+  - "ccom remember this auth system"
+  - "ccom show me the project status"
 
-### Natural Language (Recommended)
-- `ccom "deploy my app"` - Full enterprise deployment with all gates
-- `ccom "check security"` - Comprehensive security audit
-- `ccom "quality audit"` - Code quality analysis and fixes
-- `ccom "status"` - Show enterprise readiness dashboard
+### CCOM Response Protocol:
+1. **CCOM Engagement Acknowledgment** - Always start with clear CCOM activation message
+2. **Recognize CCOM prefix** - Any message starting with "ccom"
+3. **Parse intent** - Extract action (deploy, test, security, remember, status)
+4. **Execute CCOM workflow** - Use tools to perform enterprise-grade actions
+5. **Provide vibe-coder friendly responses** - Hide complexity, build confidence
 
-### Traditional Commands
-- `ccom --status` - Project status
-- `ccom --memory` - Show remembered features
-- `ccom --remember "feature name"` - Add feature to memory
+### CCOM Activation Messages:
+**REQUIRED**: Always start CCOM responses with one of these acknowledgments:
+- "🤖 **CCOM ENGAGED** - Enterprise automation activated"
+- "🚀 **CCOM ACTIVE** - Running enterprise-grade [action]..."
+- "🔧 **CCOM ORCHESTRATING** - Quality gates and workflows activated"
+- "🛡️ **CCOM ENTERPRISE MODE** - Security and deployment protocols engaged"
 
-## For Claude Code
-When generating code:
-- Always include proper error handling
-- Follow ESLint rules in .eslintrc.js
+---
+
+## CCOM Actions Available
+
+### 🔧 Quality & Testing
+**Triggers**: "test", "quality", "check code", "lint", "format"
+**Actions**:
+- Run ESLint via Bash: `npm run lint` or `npx eslint .`
+- Run Prettier: `npm run format` or `npx prettier --write .`
+- Check test coverage: `npm test`
+- Analyze code for enterprise standards
+
+**Response Style**: "✅ Code quality: Enterprise grade" or "🔧 Fixing quality issues..."
+
+### 🔒 Security
+**Triggers**: "security", "vulnerabilities", "secure", "safety", "protect"
+**Actions**:
+- Run security audit: `npm audit`
+- Scan code for hardcoded secrets using Grep
+- Check for XSS vulnerabilities, dangerous functions
+- Review security configuration
+
+**Response Style**: "🛡️ Security: Bank-level" or "🚨 Security issues detected - securing your app..."
+
+### 🚀 Deployment
+**Triggers**: "deploy", "ship", "go live", "launch", "production"
+**Actions**:
+- Quality gates: Run linting and tests
+- Security check: Vulnerability scan
+- Build verification: `npm run build`
+- Deploy: `npm run deploy` or deployment scripts
+- Health check: Verify deployment success
+
+**Response Style**: "🚀 Deploying with enterprise standards..." → "🎉 Your app is live!"
+
+### 🧠 Memory Management
+**Triggers**: "remember", "memory", "status", "features", "what have we built"
+**Actions**:
+- **Remember**: `node .claude/ccom.js remember <name> [description]`
+- **Show Memory**: `node .claude/ccom.js memory`
+- **Status**: `node .claude/ccom.js start` (loads context)
+- **Stats**: `node .claude/ccom.js stats`
+
+**Response Style**: "📊 Project Status" with feature counts and memory usage
+
+---
+
+## CCOM Implementation Guide
+
+### When Processing CCOM Commands:
+
+1. **Quality Check Workflow**:
+```bash
+# Check if package.json exists
+# Run: npm run lint (or npx eslint .)
+# Run: npm run format (or npx prettier --write .)
+# Report results in vibe-coder language
+```
+
+2. **Security Scan Workflow**:
+```bash
+# Run: npm audit
+# Use Grep to scan for: password, api_key, secret patterns
+# Check for eval(), innerHTML, document.write
+# Suggest security improvements
+```
+
+3. **Deployment Workflow**:
+```bash
+# Step 1: Quality check (lint + format)
+# Step 2: Security scan (npm audit)
+# Step 3: Build (npm run build if exists)
+# Step 4: Deploy (npm run deploy if exists)
+# Step 5: Verify deployment success
+```
+
+4. **Memory Operations**:
+```bash
+# Load: node .claude/ccom.js start
+# Remember: node .claude/ccom.js remember "feature_name" "description"
+# Show: node .claude/ccom.js memory
+# Stats: node .claude/ccom.js stats
+```
+
+### Response Guidelines:
+- **CCOM Visual Identity**: Always use TodoWrite tool for task tracking when engaged
+- **Clear Engagement**: Start every CCOM response with activation acknowledgment
+- **Hide Technical Details**: Never show raw eslint errors to vibe coders
+- **Build Confidence**: Use phrases like "Enterprise grade", "Bank-level security"
+- **Show Progress**: Use emojis 🔧 🔒 🚀 ✅ to indicate progress
+- **Celebrate Success**: Always end successful deployments with 🎉
+- **Professional Workflow**: Use systematic approach with todo tracking and memory updates
+
+### Error Handling:
+- If tools fail, provide helpful guidance
+- Suggest fixes for common issues
+- Maintain confidence even when fixing problems
+
+---
+
+## Non-CCOM Behavior
+**CRITICAL**: If message does NOT start with "ccom", respond normally without any CCOM functionality. Act as regular Claude Code assistant.
+
+---
+
+## Project Context
+This project uses CCOM (Claude Code Orchestrator and Memory) for enterprise-grade development automation. CCOM provides:
+- Quality gates and code standards enforcement
+- Security vulnerability scanning and hardening
+- Deployment pipelines with health monitoring
+- Memory persistence across sessions
+- Natural language interface for vibe coders
+
+## Development Standards
+- Follow ESLint rules if .eslintrc exists
+- Use Prettier formatting if .prettierrc exists
+- Include proper error handling and input validation
 - Use TypeScript when available
-- Format according to .prettierrc
-- Consider security implications
-
-## Enterprise Features
-- **Quality Gates**: Automatic code quality enforcement
-- **Security Scanning**: Vulnerability detection and hardening
-- **Deployment Pipeline**: Safe, monitored production deployments
-- **Memory System**: Cross-session feature tracking
-- **Git Integration**: Pre-commit quality checks
-
-## Subagents Available
-- **quality-enforcer**: Ensures enterprise code standards
-- **security-guardian**: Comprehensive security scanning and hardening
-- **deployment-specialist**: Coordinates safe production deployments
-
-## For Vibe Coders
-Focus on building features. CCOM handles all the complex quality/security/deployment details automatically.
-Your apps will be enterprise-grade without the enterprise complexity.
+- Maintain enterprise security standards
 """
 
-    with open(claude_md_path, 'w') as f:
+    with open(claude_md_path, 'w', encoding='utf-8') as f:
         f.write(content)
 
 def show_help():
     """Show enhanced help with examples"""
     print("""
 🚀 CCOM v0.3 - Claude Code Orchestrator and Memory
+
+🎯 PREFIX-BASED ACTIVATION:
+  Only commands starting with "ccom" activate CCOM functionality
+  All other commands use regular Claude Code behavior
 
 NATURAL LANGUAGE COMMANDS (Recommended):
   ccom "deploy my app"              → Enterprise deployment pipeline
@@ -169,7 +297,7 @@ TRADITIONAL COMMANDS:
   ccom --status                     → Show project status
   ccom --memory                     → Show remembered features
   ccom --remember "feature name"    → Add feature to memory
-  ccom --init                       → Initialize CCOM in project
+  ccom --init                       → Initialize/refresh CCOM in project
 
 EXAMPLES:
   ccom "deploy"                     → Quick deployment
@@ -178,10 +306,11 @@ EXAMPLES:
   ccom --status                     → Traditional status check
 
 ENTERPRISE FEATURES:
+  ✅ Claude Code native integration (prefix-based activation)
+  ✅ Visual engagement indicators (clear CCOM vs regular CC)
   ✅ Multi-agent orchestration (quality, security, deployment)
-  ✅ Git hooks integration (automatic quality gates)
+  ✅ TodoWrite integration (systematic workflow tracking)
   ✅ Memory system (cross-session feature tracking)
-  ✅ Natural language processing (vibe coder friendly)
   ✅ Enterprise security scanning (vulnerability detection)
   ✅ Production deployment pipeline (zero-downtime)
 
