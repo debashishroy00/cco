@@ -1,8 +1,31 @@
 {
-  "version": "0.1",
   "project": {
-    "name": ".claude",
+    "name": "ccom",
     "created": "2025-09-18"
   },
-  "features": {}
+  "features": {
+    "test_feature": {
+      "created": "2025-09-18T17:19:17.973Z",
+      "description": "a test feature for v0.2",
+      "files": [],
+      "userTerm": "test_feature"
+    },
+    "old_feature": {
+      "created": "2025-09-18T17:19:25.829Z",
+      "description": "test feature that should be archived",
+      "files": [],
+      "userTerm": "old_feature"
+    },
+    "long": {
+      "created": "2025-09-18T17:19:35.222Z",
+      "description": "very long description that goes on and on and on and on and should be truncated after 100 charact...",
+      "files": [],
+      "userTerm": "long"
+    }
+  },
+  "metadata": {
+    "version": "0.2",
+    "created": "2025-09-18T00:00:00.000Z",
+    "lastCleanup": "2025-09-18T00:00:00.000Z"
+  }
 }

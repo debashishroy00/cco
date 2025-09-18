@@ -9,7 +9,8 @@
       "Bash(pip uninstall:*)",
       "Bash(pip install:*)",
       "Read(//c/Users/DR/OneDrive/projects/todo/**)",
-      "Read(//c/Users/DR/OneDrive/projects/**)"
+      "Read(//c/Users/DR/OneDrive/projects/**)",
+      "Bash(mkdir:*)"
     ],
     "deny": [],
     "ask": []

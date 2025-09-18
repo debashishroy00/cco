@@ -1,43 +1,78 @@
-# CCO Configuration v0.1
+# CCO Configuration v0.2
+
+## CRITICAL: Session Start Protocol
+**FIRST ACTION in every session**: Run this command
+```bash
+node .claude/cco.js start
+```
+This loads existing features and prevents duplicate work.
 
 ## Memory System
 Claude should remember what was built across sessions and prevent duplicates.
 
 ```yaml
 cco:
-  version: "0.1"
+  version: "0.2"
   memory:
     enabled: true
     path: ".claude/memory.json"
+    management: true
 ```
 
 ## System Context
 You are helping a developer who prefers natural language descriptions.
 Always check memory before creating new features to avoid duplicates.
 
-## On Session Start
-1. Load memory from `.claude/memory.json`
-2. Inject summary of existing features
-3. Warn about duplicates when detected
+## Memory Management Commands
 
-## Memory Format
+### Core Commands
+- `node .claude/cco.js start` - Load memory & show context
+- `node .claude/cco.js remember <name> [description]` - Save new feature
+- `node .claude/cco.js memory` - Display all features
+- `node .claude/cco.js clear` - Reset memory
+
+### Regular Maintenance
+- `node .claude/cco.js stats` - Check token usage
+- `node .claude/cco.js list` - Show all features with age
+- `node .claude/cco.js archive 30` - Archive features older than 30 days
+- `node .claude/cco.js remove <name>` - Delete specific feature
+- `node .claude/cco.js compact` - Reduce memory size
+
+### Memory Limits
+- **Warning**: 5,000 tokens (2.5% of context)
+- **Archive**: 10,000 tokens (5% of context)
+- **Maximum**: 20,000 tokens (10% of context)
+
+## Development Workflow
+1. **Start session** → Run `start` command
+2. **Check for duplicates** before building
+3. **Remember new features** after creating
+4. **Archive old features** monthly
+
+## Memory Format v0.2
 ```json
 {
   "project": {
-    "name": "MyProject",
-    "created": "2025-01-17"
+    "name": "project-name"
   },
   "features": {
     "feature_name": {
-      "created": "2025-01-17",
-      "files": ["src/file.js"],
-      "description": "What it does"
+      "created": "ISO-8601-date",
+      "description": "what it does",
+      "files": ["list", "of", "files"]
     }
+  },
+  "metadata": {
+    "version": "0.2",
+    "created": "ISO-8601-date",
+    "lastCleanup": "ISO-8601-date"
   }
 }
 ```
 
-## Commands
-- When user says "remember this as X" -> Save to memory
-- When user says "what have we built?" -> Show memory
-- When user says "clear memory" -> Reset memory.json
+## Natural Language Commands
+- When user says "remember this as X" → Save to memory
+- When user says "what have we built?" → Show memory
+- When user says "clear memory" → Reset memory.json
+- When user says "archive old features" → Run archive command
+- When user says "check memory usage" → Run stats command
