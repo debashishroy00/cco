@@ -1,0 +1,8 @@
+node_modules/
+.env
+*.log
+.DS_Store
+.claude/logs/*.log
+.claude/memory.json.bak
+*.tmp
+.vscode/
