@@ -16,11 +16,15 @@ def init_project():
     current_dir = Path.cwd()
     template_dir = get_template_path()
 
-    print("Initializing CCOM v0.1...")
+    print("Initializing CCOM v0.2...")
 
     # Create .claude directory
     claude_dir = current_dir / ".claude"
     claude_dir.mkdir(exist_ok=True)
+
+    # Create archive directory
+    archive_dir = claude_dir / "archive"
+    archive_dir.mkdir(exist_ok=True)
 
     # Copy CLAUDE.md
     claude_md_src = template_dir / "CLAUDE.md"
@@ -38,12 +42,17 @@ def init_project():
     ccom_js_dst = claude_dir / "ccom.js"
     shutil.copy2(ccom_js_src, ccom_js_dst)
     print(f"Created .claude/ccom.js")
+    print(f"Created .claude/archive/")
 
-    print("\nCCOM initialized!")
+    print("\nCCOM v0.2 initialized!")
     print("\nTest it:")
-    print("  node .claude/ccom.js start")
-    print("  node .claude/ccom.js remember 'my feature'")
-    print("  node .claude/ccom.js memory")
+    print("  ccom status")
+    print("  ccom remember 'my feature'")
+    print("  ccom memory")
+    print("\nMemory management:")
+    print("  ccom stats")
+    print("  ccom list")
+    print("  ccom archive 30")
 
     return True
 
@@ -89,6 +98,20 @@ def main():
     # Clear command
     clear_parser = subparsers.add_parser("clear", help="Clear memory")
 
+    # v0.2 Memory Management Commands
+    stats_parser = subparsers.add_parser("stats", help="Show memory usage statistics")
+
+    list_parser = subparsers.add_parser("list", help="List features with age")
+    list_parser.add_argument("sort", nargs="?", default="created", help="Sort by: created or name")
+
+    archive_parser = subparsers.add_parser("archive", help="Archive old features")
+    archive_parser.add_argument("days", nargs="?", type=int, default=30, help="Archive features older than N days (default: 30)")
+
+    remove_parser = subparsers.add_parser("remove", help="Remove specific feature")
+    remove_parser.add_argument("name", help="Feature name to remove")
+
+    compact_parser = subparsers.add_parser("compact", help="Compact memory by truncating long descriptions")
+
     args = parser.parse_args()
 
     if not args.command:
@@ -105,6 +128,16 @@ def main():
         os.system(f'node .claude/ccom.js remember "{args.name}"')
     elif args.command == "clear":
         os.system("node .claude/ccom.js clear")
+    elif args.command == "stats":
+        os.system("node .claude/ccom.js stats")
+    elif args.command == "list":
+        os.system(f"node .claude/ccom.js list {args.sort}")
+    elif args.command == "archive":
+        os.system(f"node .claude/ccom.js archive {args.days}")
+    elif args.command == "remove":
+        os.system(f'node .claude/ccom.js remove "{args.name}"')
+    elif args.command == "compact":
+        os.system("node .claude/ccom.js compact")
 
 if __name__ == "__main__":
     main()

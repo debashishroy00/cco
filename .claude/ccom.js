@@ -1,8 +1,8 @@
-// CCO v0.2 - Memory System with Management Features (400 lines total)
+// CCOM v0.2 - Memory System with Management Features (400 lines total)
 const fs = require('fs');
 const path = require('path');
 
-class CCO {
+class CCOM {
   constructor() {
     this.memoryPath = path.join(__dirname, 'memory.json');
     this.archivePath = path.join(__dirname, 'archive');
@@ -429,72 +429,72 @@ ${features}
 }
 
 // Export for use
-module.exports = CCO;
+module.exports = CCOM;
 
 // If run directly, show status
 if (require.main === module) {
-  const cco = new CCO();
+  const ccom = new CCOM();
 
   const args = process.argv.slice(2);
   const command = args[0];
 
   switch(command) {
     case 'start':
-      console.log(cco.onSessionStart());
+      console.log(ccom.onSessionStart());
       break;
     case 'memory':
-      cco.showMemory();
+      ccom.showMemory();
       break;
     case 'clear':
-      cco.clearMemory();
+      ccom.clearMemory();
       break;
     case 'remember':
       const name = args[1];
       const description = args.slice(2).join(' ');
       if (name) {
-        cco.rememberFeature(name, { description });
+        ccom.rememberFeature(name, { description });
       } else {
-        console.log('Usage: node cco.js remember <name> [description]');
+        console.log('Usage: node ccom.js remember <name> [description]');
       }
       break;
     case 'stats':
-      cco.displayMemoryStats();
+      ccom.displayMemoryStats();
       break;
     case 'list':
       const sortBy = args[1] || 'created';
-      cco.listFeatures(sortBy);
+      ccom.listFeatures(sortBy);
       break;
     case 'archive':
       const days = parseInt(args[1]) || 30;
-      cco.archiveOldFeatures(days);
+      ccom.archiveOldFeatures(days);
       break;
     case 'remove':
       const featureName = args.slice(1).join(' ');
       if (featureName) {
-        cco.removeFeature(featureName);
+        ccom.removeFeature(featureName);
       } else {
-        console.log('Usage: node cco.js remove <feature-name>');
+        console.log('Usage: node ccom.js remove <feature-name>');
       }
       break;
     case 'compact':
-      cco.compactMemory();
+      ccom.compactMemory();
       break;
     default:
       console.log(`
-CCO v0.2 - Memory System with Management Features
+CCOM v0.2 - Memory System with Management Features
 
 Core Commands:
-  node cco.js start              - Show context summary & load memory
-  node cco.js remember <name> [description] - Remember a feature
-  node cco.js memory             - Display all remembered features
-  node cco.js clear              - Clear memory (start fresh)
+  node ccom.js start              - Show context summary & load memory
+  node ccom.js remember <name> [description] - Remember a feature
+  node ccom.js memory             - Display all remembered features
+  node ccom.js clear              - Clear memory (start fresh)
 
 Memory Management:
-  node cco.js stats              - Show memory usage statistics
-  node cco.js list [sort]        - List features (sort: created|name)
-  node cco.js archive [days]     - Archive features older than N days (default: 30)
-  node cco.js remove <name>      - Delete specific feature
-  node cco.js compact            - Truncate long descriptions to save space
+  node ccom.js stats              - Show memory usage statistics
+  node ccom.js list [sort]        - List features (sort: created|name)
+  node ccom.js archive [days]     - Archive features older than N days (default: 30)
+  node ccom.js remove <name>      - Delete specific feature
+  node ccom.js compact            - Truncate long descriptions to save space
 
 Memory Limits:
   Warning: 5,000 tokens (2.5% of context)

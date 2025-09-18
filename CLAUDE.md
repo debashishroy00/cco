@@ -1,9 +1,9 @@
-# CCO Configuration v0.2
+# CCOM Configuration v0.2
 
 ## CRITICAL: Session Start Protocol
 **FIRST ACTION in every session**: Run this command
 ```bash
-node .claude/cco.js start
+node .claude/ccom.js start
 ```
 This loads existing features and prevents duplicate work.
 
@@ -11,7 +11,7 @@ This loads existing features and prevents duplicate work.
 Claude should remember what was built across sessions and prevent duplicates.
 
 ```yaml
-cco:
+ccom:
   version: "0.2"
   memory:
     enabled: true
@@ -26,17 +26,17 @@ Always check memory before creating new features to avoid duplicates.
 ## Memory Management Commands
 
 ### Core Commands
-- `node .claude/cco.js start` - Load memory & show context
-- `node .claude/cco.js remember <name> [description]` - Save new feature
-- `node .claude/cco.js memory` - Display all features
-- `node .claude/cco.js clear` - Reset memory
+- `node .claude/ccom.js start` - Load memory & show context
+- `node .claude/ccom.js remember <name> [description]` - Save new feature
+- `node .claude/ccom.js memory` - Display all features
+- `node .claude/ccom.js clear` - Reset memory
 
 ### Regular Maintenance
-- `node .claude/cco.js stats` - Check token usage
-- `node .claude/cco.js list` - Show all features with age
-- `node .claude/cco.js archive 30` - Archive features older than 30 days
-- `node .claude/cco.js remove <name>` - Delete specific feature
-- `node .claude/cco.js compact` - Reduce memory size
+- `node .claude/ccom.js stats` - Check token usage
+- `node .claude/ccom.js list` - Show all features with age
+- `node .claude/ccom.js archive 30` - Archive features older than 30 days
+- `node .claude/ccom.js remove <name>` - Delete specific feature
+- `node .claude/ccom.js compact` - Reduce memory size
 
 ### Memory Limits
 - **Warning**: 5,000 tokens (2.5% of context)
