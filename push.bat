@@ -45,7 +45,7 @@ git commit -m "CCOM v0.3 - Claude Code Integration with prefix-based activation 
 
 REM Push to GitHub
 echo Pushing to GitHub...
-git push -u origin main
+git push -u origin master
 
 if %errorlevel% equ 0 (
     echo.

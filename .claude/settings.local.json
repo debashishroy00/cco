@@ -15,7 +15,12 @@
       "WebFetch(domain:docs.claude.com)",
       "WebFetch(domain:github.com)",
       "WebFetch(domain:claudelog.com)",
-      "Bash(npm install)"
+      "Bash(npm install)",
+      "Bash(git add:*)",
+      "Bash(chmod:*)",
+      "Bash(git checkout:*)",
+      "Bash(git fetch:*)",
+      "Bash(git commit:*)"
     ],
     "deny": [],
     "ask": []
