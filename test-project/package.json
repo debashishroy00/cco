@@ -1,0 +1,23 @@
+{
+  "name": "ccom-test-project",
+  "version": "1.0.0",
+  "description": "Test project for CCOM validation",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "quality": "npm run lint && npm run format",
+    "deploy": "echo 'Deploying to production...' && echo 'Deployment complete!'",
+    "test": "echo 'Running tests...' && echo 'All tests passed!'"
+  },
+  "devDependencies": {
+    "eslint": "^8.0.0",
+    "prettier": "^3.0.0",
+    "husky": "^9.0.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": ".husky/pre-commit"
+    }
+  }
+}

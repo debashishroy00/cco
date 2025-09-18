@@ -1,0 +1,17 @@
+#!/bin/sh
+# CCOM Enterprise Git Hook - Pre-commit Quality Gates
+
+echo "🔍 CCOM: Running pre-commit quality gates..."
+
+# Run CCOM quality check
+python ../ccom/orchestrator.py "quality check"
+QUALITY_RESULT=$?
+
+if [ $QUALITY_RESULT -ne 0 ]; then
+    echo "❌ CCOM: Commit blocked - quality issues detected"
+    echo "💡 Fix quality issues and try again"
+    exit 1
+fi
+
+echo "✅ CCOM: Quality gates passed - commit approved"
+exit 0
