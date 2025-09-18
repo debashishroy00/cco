@@ -3,11 +3,11 @@
 ## CRITICAL: Auto-Load Memory
 Run this IMMEDIATELY when session starts:
 ```bash
-node .claude/cco.js start
+node .claude/ccom.js start
 ```
 
 ## Session Start Protocol
-1. **FIRST ACTION**: Execute `node .claude/cco.js start`
+1. **FIRST ACTION**: Execute `node .claude/ccom.js start`
 2. **READ OUTPUT**: This shows existing features and duplicate warnings
 3. **BEFORE ANY CODE**: Check if requested feature already exists
 4. **IF DUPLICATE**: Warn user and suggest enhancing existing feature

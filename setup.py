@@ -8,10 +8,10 @@ setup(
     version="0.1.0",
     author="Your Name",
     author_email="your.email@example.com",
-    description="Memory system for Claude Code that actually remembers",
+    description="CCOM - Claude Code Orchestrator and Memory system",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/debashishroy00/cco",
+    url="https://github.com/debashishroy00/ccom",
     packages=find_packages(),
     classifiers=[
         "Development Status :: 4 - Beta",

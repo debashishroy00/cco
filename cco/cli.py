@@ -33,17 +33,17 @@ def init_project():
     shutil.copy2(claude_md_src, claude_md_dst)
     print(f"Created CLAUDE.md")
 
-    # Copy cco.js
-    cco_js_src = template_dir / "cco.js"
-    cco_js_dst = claude_dir / "cco.js"
-    shutil.copy2(cco_js_src, cco_js_dst)
-    print(f"Created .claude/cco.js")
+    # Copy ccom.js
+    ccom_js_src = template_dir / "ccom.js"
+    ccom_js_dst = claude_dir / "ccom.js"
+    shutil.copy2(ccom_js_src, ccom_js_dst)
+    print(f"Created .claude/ccom.js")
 
-    print("\nCCO initialized!")
+    print("\nCCOM initialized!")
     print("\nTest it:")
-    print("  node .claude/cco.js start")
-    print("  node .claude/cco.js remember 'my feature'")
-    print("  node .claude/cco.js memory")
+    print("  node .claude/ccom.js start")
+    print("  node .claude/ccom.js remember 'my feature'")
+    print("  node .claude/ccom.js memory")
 
     return True
 
@@ -61,14 +61,14 @@ def show_status():
         return True
 
     # Run the node command to show status
-    os.system("node .claude/cco.js start")
+    os.system("node .claude/ccom.js start")
     return True
 
 def main():
     """Main CLI entry point"""
     parser = argparse.ArgumentParser(
         description="CCOM - Claude Code Orchestrator and Memory",
-        epilog="For more info: https://github.com/debashishroy00/cco"
+        epilog="For more info: https://github.com/debashishroy00/ccom"
     )
 
     subparsers = parser.add_subparsers(dest="command", help="Available commands")
@@ -100,11 +100,11 @@ def main():
     elif args.command == "status":
         show_status()
     elif args.command == "memory":
-        os.system("node .claude/cco.js memory")
+        os.system("node .claude/ccom.js memory")
     elif args.command == "remember":
-        os.system(f'node .claude/cco.js remember "{args.name}"')
+        os.system(f'node .claude/ccom.js remember "{args.name}"')
     elif args.command == "clear":
-        os.system("node .claude/cco.js clear")
+        os.system("node .claude/ccom.js clear")
 
 if __name__ == "__main__":
     main()

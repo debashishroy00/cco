@@ -8,7 +8,8 @@
       "Bash(cco:*)",
       "Bash(pip uninstall:*)",
       "Bash(pip install:*)",
-      "Read(//c/Users/DR/OneDrive/projects/todo/**)"
+      "Read(//c/Users/DR/OneDrive/projects/todo/**)",
+      "Read(//c/Users/DR/OneDrive/projects/**)"
     ],
     "deny": [],
     "ask": []

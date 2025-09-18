@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "ccom"
 version = "0.1.0"
-description = "Memory system for Claude Code that actually remembers"
+description = "CCOM - Claude Code Orchestrator and Memory system"
 readme = "README.md"
 license = {text = "MIT"}
 authors = [
@@ -27,9 +27,9 @@ requires-python = ">=3.7"
 dependencies = []
 
 [project.urls]
-Homepage = "https://github.com/debashishroy00/cco"
-Repository = "https://github.com/debashishroy00/cco"
-Issues = "https://github.com/debashishroy00/cco/issues"
+Homepage = "https://github.com/debashishroy00/ccom"
+Repository = "https://github.com/debashishroy00/ccom"
+Issues = "https://github.com/debashishroy00/ccom/issues"
 
 [project.scripts]
 ccom = "cco.cli:main"

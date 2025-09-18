@@ -1,8 +1,8 @@
-// CCO v0.1 - Simple Memory System (200 lines total)
+// CCOM v0.1 - Claude Code Orchestrator and Memory (200 lines total)
 const fs = require('fs');
 const path = require('path');
 
-class CCO {
+class CCOM {
   constructor() {
     this.memoryPath = path.join(__dirname, 'memory.json');
     this.memory = this.loadMemory();
@@ -210,42 +210,42 @@ ${features}
 }
 
 // Export for use
-module.exports = CCO;
+module.exports = CCOM;
 
 // If run directly, show status
 if (require.main === module) {
-  const cco = new CCO();
+  const ccom = new CCOM();
 
   const args = process.argv.slice(2);
   const command = args[0];
 
   switch(command) {
     case 'start':
-      console.log(cco.onSessionStart());
+      console.log(ccom.onSessionStart());
       break;
     case 'memory':
-      cco.showMemory();
+      ccom.showMemory();
       break;
     case 'clear':
-      cco.clearMemory();
+      ccom.clearMemory();
       break;
     case 'remember':
       const name = args.slice(1).join(' ');
       if (name) {
-        cco.rememberFeature(name);
+        ccom.rememberFeature(name);
       } else {
-        console.log('Usage: node cco.js remember <feature-name>');
+        console.log('Usage: node ccom.js remember <feature-name>');
       }
       break;
     default:
       console.log(`
-CCO v0.1 - Simple Memory System
+CCOM v0.1 - Claude Code Orchestrator and Memory
 
 Commands:
-  node cco.js start    - Show context summary
-  node cco.js memory   - Display all remembered features
-  node cco.js clear    - Clear memory (start fresh)
-  node cco.js remember <name> - Remember a feature
+  node ccom.js start    - Show context summary
+  node ccom.js memory   - Display all remembered features
+  node ccom.js clear    - Clear memory (start fresh)
+  node ccom.js remember <name> - Remember a feature
       `);
   }
 }

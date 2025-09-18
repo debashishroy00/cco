@@ -18,4 +18,4 @@ ccom remember "auth system"
 ccom remember "auth system"  # ⚠️ Duplicate detected!
 
 # Or install from GitHub (latest)
-pip install git+https://github.com/debashishroy00/cco.git
+pip install git+https://github.com/debashishroy00/ccom.git
