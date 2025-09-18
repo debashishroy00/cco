@@ -32,6 +32,8 @@ def create_enhanced_cli():
                        help='Remember a feature: --remember "auth system"')
     parser.add_argument('--init', action='store_true',
                        help='Initialize CCOM in current directory')
+    parser.add_argument('--force', action='store_true',
+                       help='Force refresh CCOM configuration even if v0.3 exists')
 
     # Advanced options
     parser.add_argument('--verbose', '-v', action='store_true',
@@ -53,12 +55,12 @@ def handle_traditional_commands(args, orchestrator):
         orchestrator.handle_memory_command(f"remember {args.remember}")
         return True
     elif args.init:
-        init_ccom_project()
+        init_ccom_project(force=args.force)
         return True
 
     return False
 
-def init_ccom_project():
+def init_ccom_project(force=False):
     """Initialize CCOM v0.3 in current project"""
     print("🚀 Initializing CCOM v0.3 in current project...")
 
@@ -89,8 +91,8 @@ def init_ccom_project():
             with open(claude_md, 'r', encoding='utf-8') as f:
                 content = f.read()
 
-            if "CCOM Integration for Claude Code v0.3" in content:
-                print("✅ CLAUDE.md already v0.3 configuration")
+            if "CCOM Integration for Claude Code v0.3" in content and not force:
+                print("✅ CLAUDE.md already v0.3 configuration (use --force to refresh)")
             else:
                 # Backup existing file
                 backup_path = current_dir / "CLAUDE.md.bak"
@@ -103,6 +105,12 @@ def init_ccom_project():
                 print("✅ Updated CLAUDE.md to v0.3 configuration")
         except Exception as e:
             print(f"⚠️  Error reading CLAUDE.md: {e}")
+            # Backup existing file before creating new one
+            backup_path = current_dir / "CLAUDE.md.bak"
+            import shutil
+            shutil.copy2(claude_md, backup_path)
+            print(f"⚠️  Backed up existing CLAUDE.md to CLAUDE.md.bak")
+
             create_enhanced_claude_md(claude_md)
             print("✅ Created new CLAUDE.md v0.3 configuration")
     else:
