@@ -5,11 +5,42 @@ import os
 import sys
 import shutil
 import argparse
+import subprocess
 from pathlib import Path
 
 def get_template_path():
     """Get path to template files"""
     return Path(__file__).parent / "templates"
+
+def run_ccom_command(args):
+    """Run Node.js ccom.js command with proper error handling"""
+    try:
+        cmd = ["node", ".claude/ccom.js"] + args
+        result = subprocess.run(cmd, capture_output=True, text=True, encoding='utf-8', errors='replace', check=False)
+
+        # Print stdout if available
+        if result.stdout:
+            # Handle emoji output on Windows
+            try:
+                print(result.stdout, end='')
+            except UnicodeEncodeError:
+                # Fallback for Windows console without UTF-8 support
+                print(result.stdout.encode('ascii', 'replace').decode('ascii'), end='')
+
+        # Print stderr if available
+        if result.stderr:
+            try:
+                print(result.stderr, file=sys.stderr, end='')
+            except UnicodeEncodeError:
+                print(result.stderr.encode('ascii', 'replace').decode('ascii'), file=sys.stderr, end='')
+
+        return result.returncode == 0
+    except FileNotFoundError:
+        print("ERROR: Node.js not found. Please install Node.js to use CCOM.", file=sys.stderr)
+        return False
+    except Exception as e:
+        print(f"ERROR: Failed to run ccom command: {e}", file=sys.stderr)
+        return False
 
 def init_project():
     """Initialize CCO in current directory"""
@@ -57,7 +88,7 @@ def init_project():
     return True
 
 def show_status():
-    """Show CCO status in current directory"""
+    """Show CCOM status in current directory"""
     claude_dir = Path.cwd() / ".claude"
     memory_file = claude_dir / "memory.json"
 
@@ -70,8 +101,7 @@ def show_status():
         return True
 
     # Run the node command to show status
-    os.system("node .claude/ccom.js start")
-    return True
+    return run_ccom_command(["start"])
 
 def main():
     """Main CLI entry point"""
@@ -94,6 +124,7 @@ def main():
     # Remember command
     remember_parser = subparsers.add_parser("remember", help="Remember a feature")
     remember_parser.add_argument("name", help="Feature name to remember")
+    remember_parser.add_argument("description", nargs="?", help="Optional feature description")
 
     # Clear command
     clear_parser = subparsers.add_parser("clear", help="Clear memory")
@@ -119,25 +150,38 @@ def main():
         return
 
     if args.command == "init":
-        init_project()
+        success = init_project()
+        sys.exit(0 if success else 1)
     elif args.command == "status":
-        show_status()
+        success = show_status()
+        sys.exit(0 if success else 1)
     elif args.command == "memory":
-        os.system("node .claude/ccom.js memory")
+        success = run_ccom_command(["memory"])
+        sys.exit(0 if success else 1)
     elif args.command == "remember":
-        os.system(f'node .claude/ccom.js remember "{args.name}"')
+        if args.description:
+            success = run_ccom_command(["remember", args.name, args.description])
+        else:
+            success = run_ccom_command(["remember", args.name])
+        sys.exit(0 if success else 1)
     elif args.command == "clear":
-        os.system("node .claude/ccom.js clear")
+        success = run_ccom_command(["clear"])
+        sys.exit(0 if success else 1)
     elif args.command == "stats":
-        os.system("node .claude/ccom.js stats")
+        success = run_ccom_command(["stats"])
+        sys.exit(0 if success else 1)
     elif args.command == "list":
-        os.system(f"node .claude/ccom.js list {args.sort}")
+        success = run_ccom_command(["list", args.sort])
+        sys.exit(0 if success else 1)
     elif args.command == "archive":
-        os.system(f"node .claude/ccom.js archive {args.days}")
+        success = run_ccom_command(["archive", str(args.days)])
+        sys.exit(0 if success else 1)
     elif args.command == "remove":
-        os.system(f'node .claude/ccom.js remove "{args.name}"')
+        success = run_ccom_command(["remove", args.name])
+        sys.exit(0 if success else 1)
     elif args.command == "compact":
-        os.system("node .claude/ccom.js compact")
+        success = run_ccom_command(["compact"])
+        sys.exit(0 if success else 1)
 
 if __name__ == "__main__":
     main()

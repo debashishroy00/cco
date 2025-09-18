@@ -5,10 +5,10 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="ccom",
-    version="0.1.0",
-    author="Your Name",
-    author_email="your.email@example.com",
-    description="CCOM - Claude Code Orchestrator and Memory system",
+    version="0.2.0",
+    author="debashishroy00",
+    author_email="debashishroy00@example.com",
+    description="CCOM v0.2 - Claude Code Orchestrator and Memory system with management features",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/debashishroy00/ccom",
